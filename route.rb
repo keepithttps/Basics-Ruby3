@@ -20,7 +20,6 @@ class Route
 		puts @add_a_stations
 	end
 end
-
 stan = Route.new('a', 'c')
 
 stan.add_a_station('b') 
