@@ -1,5 +1,5 @@
 class Station
-	attr_wrieter
+	
 	def initialize(name)
 		@name_station = name                                # название станции
 		@freight_train = ['SAM_RND', 'TOM_KEM']             # грузовой поезд
