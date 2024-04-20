@@ -30,7 +30,7 @@ class Train
 
   # список станций = ('MSK', 'SPB', 'NSK', 'EKB', 'NNV', 'KZN', 'OMS')
 
-  # st_on = ['MSK', 'SPB', 'NSK', 'EKB', 'NNV', 'KZN', 'OMS']
+  # st_on = ['MSK', 'SPB', 'NSK', 'EKB', 'NNV', 'KZN', 'OMS'] 
 	def route(*station)
 		@starting = station.first
 		@end_station = station.last
