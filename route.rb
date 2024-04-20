@@ -23,6 +23,5 @@ end
 
 stan = Route.new('a', 'c')
 
-stan.add_a_station('b')
-
+stan.add_a_station('b') 
 stan.all_station_in_order
