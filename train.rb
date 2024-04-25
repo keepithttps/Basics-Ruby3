@@ -1,64 +1,94 @@
 class Train 
-	attr_writer :speed, :stop
-	attr_reader :speed, :number_of_wagons, :number, :stop
 
-	def initialize(number, type, number_of_wagons)
-		@number = number
-		@type = type
-		@number_of_wagons = number_of_wagons
-	end
+    attr_writer :speed, :stop
+  attr_reader :speed, :number_of_wagons, :number, :stop, :route
 
-	def gain_speed=(up)
-		@speed = up
-	end
+  def initialize(number, type, number_of_wagons)
+    @number = number
+    @type = type
+    @number_of_wagons = number_of_wagons
+  end
 
-	def reduce_speed=(down)
-		@speed = down
-	end
+  def gain_speed=(up)
+    @speed = up
+  end
+
+  def reduce_speed=(down)
+    @speed = down
+  end
 
   def stop
     @speed = 0
   end
 
-	def number_of_wagons=(num)
-		 if @speed != 0
+  def number_of_wagons=(num)
+     if @speed != 0
       puts "Остоновите поезд на станций"
     else
       @number_of_wagons = num 
     end 
-	end
+  end
 
-  # список станций = ('MSK', 'SPB', 'NSK', 'EKB', 'NNV', 'KZN', 'OMS')
+  def assign_route(route)
+    @route = route
+    @current_station_index = 0
+    current_station
+  end
 
-  # st_on = ['MSK', 'SPB', 'NSK', 'EKB', 'NNV', 'KZN', 'OMS'] 
-	def route(*station)
-		@starting = station.first
-		@end_station = station.last
-		@route = station
+  def current_station
+    @route[@current_station_index].station
+  end
 
-		puts "Поезд #{@number} находиться на станции #{@starting}"
-	end
-		
-	def finding_a_train_on_line
-		num = nil
-		until num == 1 || num == 2			
-			puts "Поезд #{@number} находиться на станции #{@starting}"      
-			puts " 1. Следущая станция"
-			puts " 2. Предыдущая станция"
-			puts "Выберите нужный вариант и введите цифру  1 или 2."
-			num = gets.chomp.to_i
-		end
-      
-    ind = @route.index(@starting)
-		if  num == 1
-		  puts "Поезд #{@number} находиться на станции #{@starting = @route[ind + 1]}"
-		else
-			puts "Поезд #{@number} находиться на станции #{@starting = @route[ind - 1]}"
-		end
+  def next_station
+    @route[@current_station_index + 1].station
+  end
 
-    ind = @route.index(@starting)
-    puts "Предыдущая станция #{@route[(ind - 1)]}"
-    puts "Сейчас станция #{@route[ind]}"
-    puts "Следующая станция #{@route[(ind + 1)]}"
-	end
+  def previous_station
+    @route[@current_station_index - 1].station if @current_station_index.positive?
+  end
+
+  def go_forward
+    @current_station_index += 1
+    puts "Предыдущая станция:#{previous_station}"
+    puts "Tекущая_станция: #{current_station}"
+    puts "Следущая станция: #{next_station}"
+  end
+
+  def go_back
+    @current_station_index -= 1
+    puts "Предыдущая станция: #{previous_station}" 
+    puts "Tекущая_станция: #{current_station}"
+    puts "Следущая станция: #{next_station}"
+  end
 end
+
+
+class Route
+  attr_reader :station
+
+  def initialize(station)
+    @station = station
+  end
+
+end
+
+# список станций = ('MSK', 'SPB', 'NSK', 'EKB', 'NNV', 'KZN', 'OMS')
+
+msk_oms = []
+msk_oms << Route.new("MSK")
+msk_oms << Route.new("SPB")
+msk_oms << Route.new("NSK")
+msk_oms << Route.new("EKB")
+msk_oms << Route.new("NNV")
+msk_oms << Route.new("KZN")
+msk_oms << Route.new("OMS")
+
+
+msk = Train.new(123, 'passenger', 40)
+msk.assign_route(msk_oms)
+
+puts
+puts msk.go_forward
+puts msk.go_forward
+puts msk.go_forward
+puts msk.go_back
